@@ -1,0 +1,41 @@
+﻿@page "/allProducts";
+
+<h3>Products</h3>
+<a href="/addProduct"> Add Products </a>
+
+@if (productList == null)
+{
+<p>Loading...</p>
+}
+else if (productList.Count == 0)
+{
+    <p>No products found.</p>
+}
+else
+{
+    <table class="table">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+        <tbody>
+            @foreach (var product in productList)
+            {
+                <tr>
+                    <td>@product.Id</td>
+                    <td>@product.Name</td>
+                    <td>@product.Price</td>
+                    <td>
+                        <button><a href="/updateProduct/@product.Id">Update</a></button>
+                    </td>
+                    <td>
+                        <button @onclick="() => RemoveProduct(product)">Delete</button>
+                    </td>
+            </tr>
+        }
+    </tbody>
+</table>
+}
+
+
