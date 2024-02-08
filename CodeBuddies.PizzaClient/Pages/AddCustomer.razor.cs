@@ -1,7 +1,6 @@
 using CodeBuddies.PizzaAPI.Models;
+using CodeBuddies.PizzaClient.Services;
 using Microsoft.AspNetCore.Components;
-using System.Net.Http.Json;
-using static System.Net.WebRequestMethods;
 
 namespace CodeBuddies.PizzaClient.Pages
 {
@@ -13,14 +12,22 @@ namespace CodeBuddies.PizzaClient.Pages
         private CustomerModel customer = new CustomerModel();
         private string errorMessage;
         private string successMessage;
+        [Inject]
+        private ICustomerService customerService { get; set; }
 
         private async Task SubmitCustomer()
         {
             try
             {
-                HttpResponseMessage response = await http.PostAsJsonAsync("https://localhost:7158/api/Customers", customer);
-                response.EnsureSuccessStatusCode();
-                successMessage = "Customer added successfully!";
+                bool result = await customerService.SubmitCustomer(customer);
+                if (result)
+                {
+                    successMessage = "Customer added successfully!";
+                }
+                else
+                {
+                    errorMessage = "Error adding customer: Unknown error occurred.";
+                }
             }
             catch (HttpRequestException ex)
             {

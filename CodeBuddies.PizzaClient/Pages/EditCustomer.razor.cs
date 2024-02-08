@@ -1,7 +1,7 @@
 using CodeBuddies.PizzaAPI.Models;
 using Microsoft.AspNetCore.Components;
-using System.Net.Http.Json;
-using static System.Net.WebRequestMethods;
+using CodeBuddies.PizzaClient.Services;
+
 
 namespace CodeBuddies.PizzaClient.Pages
 {
@@ -14,11 +14,14 @@ namespace CodeBuddies.PizzaClient.Pages
         private string errorMessage;
         private string successMessage;
 
+        [Inject]
+        private ICustomerService customerService { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             try
             {
-                customer = await http.GetFromJsonAsync<CustomerModel>($"https://localhost:7158/api/Customers/{Id}");
+                customer = await customerService.GetCustomerById(Id);
             }
             catch (Exception ex)
             {
@@ -30,9 +33,15 @@ namespace CodeBuddies.PizzaClient.Pages
         {
             try
             {
-                HttpResponseMessage response = await http.PutAsJsonAsync($"https://localhost:7158/api/Customers/{customer.Id}", customer);
-                response.EnsureSuccessStatusCode();
-                successMessage = "Customer Edited successfully!";
+                bool result = await customerService.EditCustomer(Id, customer);
+                if (result)
+                {
+                    successMessage = "Customer edited successfully!";
+                }
+                else
+                {
+                    errorMessage = "Error editing customer: Unknown error occurred.";
+                }
             }
             catch (HttpRequestException ex)
             {
