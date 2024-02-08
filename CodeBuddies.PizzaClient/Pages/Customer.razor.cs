@@ -1,6 +1,6 @@
 using CodeBuddies.PizzaAPI.Models;
-using System.Net.Http.Json;
-using static System.Net.WebRequestMethods;
+using CodeBuddies.PizzaClient.Services;
+using Microsoft.AspNetCore.Components;
 
 namespace CodeBuddies.PizzaClient.Pages
 {
@@ -11,35 +11,33 @@ namespace CodeBuddies.PizzaClient.Pages
         private string errorMessage;
         private string sucessMessage;
 
-        private async Task GetCustomers()
-        {
-            try
-            {
-                customerData = await http.GetFromJsonAsync<List<CustomerModel>>("https://localhost:7158/api/Customers");
-            }
-            catch (Exception ex)
-            {
-                errorMessage = "An error occurred while retrieving customer data: " + ex.Message;
-            }
-        }
+        [Inject]
+        private ICustomerService customerService { get; set; }
 
         private async Task Delete(CustomerModel customer)
         {
-            try
+            bool deletionResult = await customerService.DeleteCustomer(customer);
+            if (deletionResult)
             {
-                HttpResponseMessage response = await http.DeleteAsync($"https://localhost:7158/api/Customers/{customer.Id}");
                 customerData.Remove(customer);
-                sucessMessage = "User deleted sucessfully";
+                sucessMessage = "User deleted successfully";
             }
-            catch (Exception ex)
+            else
             {
-                errorMessage = "An error occurred while deleting the customer: " + ex.Message;
+                errorMessage = "Failed to delete the user. Please try again.";
             }
         }
 
         protected override async Task OnInitializedAsync()
         {
-            await GetCustomers();
+            try
+            {
+                customerData = await customerService.GetCustomers();
+            }
+            catch (Exception ex)
+            {
+                errorMessage = "An error occurred while retrieving customer data: " + ex.Message;
+            }
         }
     }
 }
