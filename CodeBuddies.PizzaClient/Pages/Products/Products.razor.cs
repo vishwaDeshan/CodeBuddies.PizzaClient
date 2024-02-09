@@ -9,6 +9,8 @@ namespace CodeBuddies.PizzaClient.Pages.Products
         [Inject]
         private IProductService _productService { get; set; }
         private List<Product> productList = new List<Product>();
+        private string successMessage;
+        private string errorMessage;
 
         //public Products(IProductService productService)
         //{
@@ -29,7 +31,7 @@ namespace CodeBuddies.PizzaClient.Pages.Products
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error fetching products: {ex.Message}");
+                errorMessage = $"Error fetching products: {ex.Message}";
             }
         }
 
@@ -40,11 +42,11 @@ namespace CodeBuddies.PizzaClient.Pages.Products
             Console.WriteLine(response.ToString());
             if (response.IsSuccessStatusCode)
             {
-                Console.WriteLine("Delete successfully.");
+                successMessage = $"Delete successfully.";
             }
             else
             {
-                Console.WriteLine("Failed to delete product.");
+                errorMessage = $"Failed to delete product.";
             }
         }
     }

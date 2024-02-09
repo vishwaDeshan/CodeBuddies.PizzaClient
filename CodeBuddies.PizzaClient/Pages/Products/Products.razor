@@ -4,7 +4,19 @@
 <hr />
 <a href="/addProduct" class="btn btn-primary float-end me-5 mb-2"> Add Products </a>
 
-@if (productList == null)
+@if (successMessage != null)
+{
+    <div class="alert alert-success" role="alert">
+        @successMessage
+    </div>
+}
+
+@if (errorMessage != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @errorMessage
+    </div>
+}else if (productList == null)
 {
     <p>Loading...</p>
 }
