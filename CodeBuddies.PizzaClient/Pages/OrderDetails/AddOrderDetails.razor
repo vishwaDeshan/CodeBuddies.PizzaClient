@@ -1,0 +1,34 @@
+﻿@page "/oderDetails/add"
+<h3>Add Order Details</h3>
+
+@if (errorMessage != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @errorMessage
+    </div>
+}
+
+@if (successMessage != null)
+{
+    <div class="alert alert-success" role="alert">
+        @successMessage
+    </div>
+}
+
+<form @onsubmit="SubmitOrderDetails">
+    <div class="form-group">
+        <label for="email">Quantity</label>
+        <input type="number" class="form-control" id="quantity" @bind="orderDetail.Quantity" required>
+    </div>
+    <div class="form-group">
+        <label for="orderId">Order Id</label>
+        <input type="number" class="form-control" id="orderId" @bind="orderDetail.OrderId" required>
+    </div>
+    <div class="form-group">
+        <label for="productId">Product Id</label>
+        <input type="number" class="form-control" id="productId" @bind="orderDetail.ProductId" required>
+    </div>
+    
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
