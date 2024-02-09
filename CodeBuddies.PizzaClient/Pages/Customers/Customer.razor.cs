@@ -2,7 +2,7 @@ using CodeBuddies.PizzaAPI.Models;
 using CodeBuddies.PizzaClient.Services;
 using Microsoft.AspNetCore.Components;
 
-namespace CodeBuddies.PizzaClient.Pages
+namespace CodeBuddies.PizzaClient.Pages.Customers
 {
     public partial class Customer
     {

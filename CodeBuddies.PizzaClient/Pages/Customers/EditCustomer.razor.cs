@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 using CodeBuddies.PizzaClient.Services;
 
 
-namespace CodeBuddies.PizzaClient.Pages
+namespace CodeBuddies.PizzaClient.Pages.Customers
 {
     public partial class EditCustomer
     {
