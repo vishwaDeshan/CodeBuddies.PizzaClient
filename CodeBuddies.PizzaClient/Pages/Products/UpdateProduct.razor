@@ -1,16 +1,22 @@
 ﻿@page "/updateProduct/{id:int}"
-<h3>UpdateProduct</h3>
+<div class="border border-1 p-5 ms-5 me-5 bg-light">
+    <h3 class="m-2"> Update product</h3>
 
-<form @onsubmit="HandleUpdateProduct">
-    <div>
-        <label for="productName">Name:</label>
-        <input type="text" id="productName" @bind="product.Name" />
-    </div>
-    <div>
-        <label for="productPrice">Price:</label>
-        <input type="number" id="productPrice" @bind="product.Price" />
-    </div>
-    <button type="submit">Update Product</button>
-</form>
+    <form @onsubmit="HandleUpdateProduct" class="ms-5 me-5">
+        <div class="form-group row mb-2">
+            <label for="productName" class="col-md-2 col-form-label">Name:</label>
+            <input class="form-control" type="text" id="productName" @bind="product.Name" />
+        </div>
+        <div class="form-group row mb-3">
+            <label for="productPrice" class="col-md-2 col-form-label">Price:</label>
+            <input class="form-control" type="number" id="productPrice" @bind="product.Price" />
+        </div>
+        <div class="row">
+            <div class="col-md-12 text-right">
+                <center><button type="submit" class="btn btn-primary">Update Product</button></center>
+            </div>
+        </div>
 
+    </form>
+</div>
 
