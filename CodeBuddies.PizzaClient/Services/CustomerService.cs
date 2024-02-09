@@ -11,7 +11,7 @@ namespace CodeBuddies.PizzaClient.Services
         Task<CustomerModel> GetCustomerById(int id);
         Task<bool> DeleteCustomer(CustomerModel customer);
         Task<bool> SubmitCustomer(CustomerModel customer);
-        Task<bool> EditCustomer(int id,CustomerModel customer);
+        Task<bool> EditCustomer(int id, CustomerModel customer);
 
 
     }
@@ -50,9 +50,9 @@ namespace CodeBuddies.PizzaClient.Services
                 HttpResponseMessage response = await httpClient.DeleteAsync($"https://localhost:7158/api/Customers/{customer.Id}");
                 return response.IsSuccessStatusCode;
             }
-             catch (Exception ex)
+            catch (Exception ex)
             {
-                throw new Exception($"Exception: {ex.Message}");
+                throw new Exception($"Error: {ex.Message}");
             }
         }
 
@@ -61,8 +61,7 @@ namespace CodeBuddies.PizzaClient.Services
             try
             {
                 HttpResponseMessage response = await httpClient.PostAsJsonAsync("https://localhost:7158/api/Customers", customer);
-                response.EnsureSuccessStatusCode();
-                return true;
+                return response.IsSuccessStatusCode; ;
             }
             catch (HttpRequestException ex)
             {
@@ -75,8 +74,7 @@ namespace CodeBuddies.PizzaClient.Services
             try
             {
                 HttpResponseMessage response = await httpClient.PutAsJsonAsync($"https://localhost:7158/api/Customers/{id}", customer);
-                response.EnsureSuccessStatusCode();
-                return true;
+                return response.IsSuccessStatusCode;
             }
             catch (HttpRequestException ex)
             {

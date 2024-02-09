@@ -28,7 +28,7 @@ namespace CodeBuddies.PizzaClient.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error fetching products: {ex.Message}");
+                Console.WriteLine($"Error fetching order details: {ex.Message}");
                 return null;
             }
         }
